@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from jose import jwt
+from jose import jwt, JWTError
 
 from passlib.context import CryptContext
 
@@ -31,3 +31,15 @@ def create_access_token(data:dict):
         settings.SECRET_KEY,
         algorithm=ALGORITHM
     )
+
+def verify_access_token(token: str):
+    try:
+        payload = jwt.decode(
+            token, 
+            settings.SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+        return payload
+
+    except JWTError:
+        return None
