@@ -7,6 +7,7 @@ from app.database.database import Base
 from app.database.init_db import create_tables
 from app.api.routes.auth import router as auth_router
 from app.api.routes.user import router as user_router
+from app.api.routes.chat import router as chat_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -20,6 +21,7 @@ app = FastAPI(
 
 app.include_router(auth_router)
 app.include_router(user_router)
+app.include_router(chat_router)
 
 @app.get("/")
 def home():
