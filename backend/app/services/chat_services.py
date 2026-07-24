@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.chat import ChatSession
+from app.models.message import ChatMessage
 
 class ChatService:
     @staticmethod
@@ -17,3 +18,26 @@ class ChatService:
         db.refresh(session)
 
         return session
+
+def save_message(
+    db: Session,
+    session_id: int,
+    role: str,
+    content: str
+):
+    message = ChatMessage(session_id = session_id, role=role, content = content)
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    return message
+
+def get_message(
+    db: Session,
+    session_id: int
+):
+    return (
+        db.query(ChatMessage)
+        .filter(ChatMessage.session_id == session_id)
+        .order_by(ChatMessage.id)
+        .all()
+    )
