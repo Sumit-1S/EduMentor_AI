@@ -1,5 +1,10 @@
 from fastapi import FastAPI
-from app.config import settings
+from app.core.config import settings
+
+from app.database.database import engine
+from app.database.database import Base
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="EduMentor AI",
