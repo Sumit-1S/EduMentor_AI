@@ -12,3 +12,7 @@ class ChatSessionResponse(BaseModel):
     model_config={
         "from_attribute": True
     }
+
+class ChatRequest(BaseModel):
+    session_id: int
+    prompt: str
